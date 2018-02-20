@@ -26,3 +26,36 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.input {
+  margin-left: 50px;
+  margin-top: 50px;
+}
+
+.input__input {
+  padding: 8px;
+  border: none;
+  border-radius: 2px;
+  outline: none;
+  background-color: #FAE3D9;
+  margin-bottom: 24px;
+  transition: .2s ease-in;
+  width: 20%;
+}
+
+.input__input:hover {
+  background-color: #efd7cd;
+}
+
+.input__button {
+  border: none;
+  border-radius: 4px;
+  background-color: #F4E8C1;
+  padding: 16px 56px;
+  margin-left: 16px;
+  transition: .2s ease-in;
+}
+
+.input__button:hover {
+  background-color: #e1d4ac;
+}

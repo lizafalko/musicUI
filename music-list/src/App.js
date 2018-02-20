@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import './App.css';
 
 class App extends Component {
   addTrack() {
@@ -10,20 +11,20 @@ class App extends Component {
 
   findTrack() {
     console.log('findTrack', this.searchInput.value);
-    this.props.onFindTrack(this.trackInput.value);
+    this.props.onFindTrack(this.searchInput.value);
   }
 
   render() {
     console.log(this.props.tracks);
     return (
-      <div>
+      <div className="input">
         <div>
-          <input type="text" ref={(input) => { this.trackInput = input }} />
-          <button onClick={this.addTrack.bind(this)}>Add track</button>
+          <input type="text" className="input__input" ref={(input) => { this.trackInput = input }} />
+          <button className="input__button" onClick={this.addTrack.bind(this)}>Add track</button>
         </div>
         <div>
-          <input type="text" ref={(input) => { this.searchInput = input }} />
-          <button onClick={this.findTrack.bind(this)}>Find track</button>
+          <input type="text" className="input__input" ref={(input) => { this.searchInput = input }} />
+          <button className="input__button" onClick={this.findTrack.bind(this)}>Find track</button>
         </div>
         <ul>
           {this.props.tracks.map((track, index) =>
@@ -37,7 +38,7 @@ class App extends Component {
 
 export default connect(
   state => ({
-    tracks: state.tracks
+    tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)) //проверяем входит ли имя в include
   }),
   dispatch => ({
     onAddTrack: (name) => {
@@ -48,6 +49,7 @@ export default connect(
       dispatch({ type: 'ADD_TRACK', payload }); //добавили метод, который позволяет добавить трек
     },
     onFindTrack: (name) => {
+      console.log('name', name);
       dispatch({ type: 'FIND_TRACK', payload: name });
     }
   })
