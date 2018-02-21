@@ -1,24 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import './App.css';
+import { connect } from 'react-redux';
+import { Link } from 'react-router';
+
 import { getTracks } from './actions/tracks';
+import Menu from './Menu';
 
-class App extends Component {
-  addTrack() {
-    console.log('addTrack', this.trackInput.value);
-    this.props.onAddTrack(this.trackInput.value);
-    this.trackInput.value = '';
+const App = ({ tracks, onAddTrack, onFindTrack, onGetTracks, ownProps }) => {
+  console.log('ownProps', ownProps);
+  let trackInput = '';
+  let searchInput = '';
+
+  const addTrack = () => {
+      console.log('addTrack', trackInput.value);
+      onAddTrack(trackInput.value);
+      trackInput.value = '';
   }
 
-  findTrack() {
-    console.log('findTrack', this.searchInput.value);
-    this.props.onFindTrack(this.searchInput.value);
+  const findTrack = () => {
+    console.log('findTrack', searchInput.value);
+    onFindTrack(searchInput.value);
   }
 
-  render() {
-    console.log(this.props.tracks);
-    return (
+  return (
       <div className="input">
+        <Menu />
         <div>
           <input type="text" className="input__input" ref={(input) => { this.trackInput = input }} />
           <button className="input__button" onClick={this.addTrack.bind(this)}>Add track</button>
@@ -31,17 +37,18 @@ class App extends Component {
           <button className="input__button input__button--no-left" onClick={this.props.onGetTracks}>Get Tracks</button>
         </div>
         <ul>
-          {this.props.tracks.map((track, index) =>
-            <li key={index}>{track.name}</li> //получили и вывели на экран значения из state
+          {tracks.map((track, index) =>
+            <li key={index}>
+            <Link to={`/tracks/${track.id}`}>{track.name}</Link>
+            </li>
           )}
         </ul>
       </div>
     );
   }
-}
 
 export default connect(
-  state => ({
+  (state, ownProps) => ({
     tracks: state.tracks.filter(track => track.name.includes(state.filterTracks)) //проверяем входит ли имя в include
   }),
   dispatch => ({
