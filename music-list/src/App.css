@@ -59,3 +59,7 @@
 .input__button:hover {
   background-color: #e1d4ac;
 }
+
+.input__button--no-left {
+  margin-left: 0 !important;
+}
